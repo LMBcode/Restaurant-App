@@ -63,6 +63,16 @@ flutter:
     - images/fruits.png
     - images/juices.png
     - images/vegetables.png
+    - images/pizza_margherita.png
+    - images/cheeseburger.png
+    - images/caesar_salad.png
+    - images/pasta_carbonara.png
+    - images/grilled_salmon.png
+    - images/tacos.png
+    - images/sushi_platter.png
+    - images/fried_chicken.png
+    - images/steak.png
+    - images/veggie_stir_fry.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
