@@ -1,8 +1,11 @@
+
+import 'package:chatapp/pages/menu_page.dart';
 import 'package:flutter/material.dart';
 import 'foods_list.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final Function(BuildContext context, String foodType) onFoodTypeSelected;
+  const HomePage({Key? key,required this.onFoodTypeSelected}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -10,15 +13,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController _searchController = TextEditingController();
+   final FocusNode _searchFocusNode = FocusNode();
 
-  @override
+  int _selectedIndex = 0;
+
+  void navigateBottomBar(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  List<MenuItem> recommendedMenuItems =
+    menuItems.where((item) => item.isRecommended).toList();
+
+  
+
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Restaurant"),
+      backgroundColor: Colors.grey[100],
+       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: const Icon(Icons.menu,color: Colors.amber,),
+        actions: [
+          IconButton(onPressed: (){}, icon: const Icon(Icons.person , color: Colors.amber,))
+        ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(18.0),
+        padding: const EdgeInsets.all(12.0),
         child: header(),
       ),
     );
@@ -29,10 +51,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [Icon(Icons.list), Icon(Icons.person)],
-        ),
+      
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
@@ -44,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold),
             ),
             Text(
-              "Healthy foods.",
+              "Food.",
               style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 30.0,
@@ -67,6 +86,7 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: TextField(
                     controller: _searchController,
+                    focusNode: _searchFocusNode,
                     decoration: const InputDecoration(
                       hintText: "Search",
                       contentPadding: EdgeInsets.only(top: 50),
@@ -75,11 +95,23 @@ class _HomePageState extends State<HomePage> {
                     ),
                     textAlign: TextAlign.start,
                     style: const TextStyle(color: Colors.white),
-                    onChanged: (value) {
-                    },
+                    onChanged: (value) {},
+                    onSubmitted: (value) {
+                        if (value.isNotEmpty) {
+                          widget.onFoodTypeSelected(context, value);
+                        }
+                      },
                   ),
                 ),
-                const Icon(Icons.search),
+                 IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: (){
+                     String value = _searchController.text;
+                      if (value.isNotEmpty) {
+                        widget.onFoodTypeSelected(context, value);
+                      }
+                  },
+                ),
               ],
             ),
           ),
@@ -97,9 +129,34 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+        section("Recommended Products"),
         Padding(
-          padding: const EdgeInsets.only(top: 50),
-          child: section(),
+            padding: const EdgeInsets.only(top: 20),
+            child: SizedBox(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: recommendedMenuItems.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return recommendedProduct(recommendedMenuItems[index]);
+                },
+              ),
+            )),
+        section("Most Popular"),
+
+        Padding(
+          padding: const EdgeInsets.only(top : 10),
+          child: SizedBox(
+            height: 150,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: foodType.length,
+              itemBuilder: (BuildContext context , int index){
+                return mostPopularProduct(foodType[index]);
+              }
+            )
+            
+            ),
         )
       ],
     ));
@@ -137,28 +194,103 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget section() {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              "Recommended Products",
-              style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(
-              "See all",
-              style: TextStyle(color: Colors.amber),
-            )
-          ],
-        ),
-
-        
-      ],
+  Widget section(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: const TextStyle(
+                fontFamily: "Montserrat",
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+          ),
+          const Text(
+            "See all",
+            style: TextStyle(color: Colors.amber),
+          )
+        ],
+      ),
     );
+  }
+
+  Widget recommendedProduct(MenuItem menuItem) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 12, right: 25),
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: SizedBox(
+          width: 200,
+          height: 250,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(menuItem.image, width: 100, height: 100),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      menuItem.name,
+                      style: const TextStyle(
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      menuItem.price,
+                      style: const TextStyle(color: Colors.amber),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget mostPopularProduct(Food food) {
+    return 
+    GestureDetector(
+    onTap: () => onFoodTypeSelected(context,food.type),
+    child : Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 18),
+          child: Card(
+            elevation: 10,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: SizedBox(
+              width: 100,
+              height: 100,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                    child: Image.asset(food.image, width: 50, height: 50)),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: Text(food.type),
+        )
+      ],
+    )
+    );
+  }
+
+ void onFoodTypeSelected(BuildContext context, String foodType) {
+    widget.onFoodTypeSelected(context, foodType);
   }
 }
