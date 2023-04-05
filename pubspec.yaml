@@ -38,11 +38,28 @@ flutter:
     - images/veggie_stir_fry.png
     - images/hamburger.png
     - images/pizza.png
+    - images/chicken_pasta.png
+    - images/pizza_tomato.png
+    - images/vegan_pizza.png
+    - images/othersushi.png
+    - images/bolognese.png
+    - images/sushisa.png
+    - images/sushi_platter.png
     - images/meat.png
     - images/tacos.png
     - images/sushi.png
     - images/salad.png
     - images/cake-slice.png
+    - images/pizza_chicken.png
+    - images/hambur.png
+    - images/lemon.png
+    - images/lemonjuice.png
+    - images/orange.png
+    - images/orangejuice.png
+    - images/strawberry.png
+    - images/strawberryjuice.png
+    - images/apple.png
+
   fonts:
     - family: Montserrat
       fonts:
