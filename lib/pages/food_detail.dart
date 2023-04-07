@@ -144,9 +144,15 @@ class _FoodDetailsState extends State<FoodDetails> {
                                       ),
                                       child: const Center(child: Text("1")),
                                     ),
-                                    const Icon(
-                                      Icons.add,                                                         
-                                      ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          quantity++;
+                                        });
+                                      },
+                                      child: const Icon(Icons.add),
+                                    ),
+                              ]),
 
 
                               ]),

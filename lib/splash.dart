@@ -3,11 +3,13 @@
 
 
 import 'package:chatapp/home_page.dart';
+import 'package:chatapp/pages/food_detail.dart';
 import 'package:chatapp/pages/menu_page.dart';
 import 'package:chatapp/pages/order_page.dart';
 import 'package:flutter/material.dart';
 
 import 'components/bottom_nav.dart';
+import 'foods_list.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -33,6 +35,14 @@ class _SplashPageState extends State<SplashPage> {
         context,
         MaterialPageRoute(
           builder: (context) => MenuPage(foodType: foodType),
+        ),
+    );
+  },
+  onFoodSelected: (BuildContext context , MenuItem menuItem){
+          Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FoodDetails(menuItem: menuItem),
         ),
     );
   },

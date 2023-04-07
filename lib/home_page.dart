@@ -5,7 +5,8 @@ import 'foods_list.dart';
 
 class HomePage extends StatefulWidget {
   final Function(BuildContext context, String foodType) onFoodTypeSelected;
-  const HomePage({Key? key,required this.onFoodTypeSelected}) : super(key: key);
+  final Function (BuildContext context, MenuItem food) onFoodSelected;
+  const HomePage({Key? key,required this.onFoodTypeSelected,required this.onFoodSelected}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -217,7 +218,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget recommendedProduct(MenuItem menuItem) {
-    return Padding(
+    return 
+    GestureDetector(
+    onTap: () => widget.onFoodSelected(context,menuItem),
+    child : Padding(
       padding: const EdgeInsets.only(top: 12, right: 25),
       child: Card(
         elevation: 3,
@@ -244,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      menuItem.price,
+                      '\$${menuItem.price}',
                       style: const TextStyle(color: Colors.amber),
                     )
                   ],
@@ -254,6 +258,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    ),
     );
   }
 

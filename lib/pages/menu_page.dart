@@ -32,7 +32,7 @@ class _MenuPageState extends State<MenuPage> {
           ? ListView.builder(
               itemCount: filteredMenuItems.length,
               itemBuilder: (BuildContext context, int index) {
-                return category(filteredMenuItems[index]);
+                return category(filteredMenuItems[index]);  
               },
             )
           : const Center(
@@ -74,7 +74,7 @@ class _MenuPageState extends State<MenuPage> {
                   const Icon(Icons.shopping_cart),
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
-                    child: Text(menuItem.price),
+                    child: Text("\$" + menuItem.price.toString()),
                   )
                 ],
               )
