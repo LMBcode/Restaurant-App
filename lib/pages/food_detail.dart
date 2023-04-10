@@ -1,23 +1,57 @@
+import 'package:chatapp/presentation/PricesPreferencesVM.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:view_model_x/view_model_x.dart';
 
+import '../food_viewmodel.dart';
 import '../foods_list.dart';
 
-class FoodDetails extends StatefulWidget {
+class FoodDetails extends StatelessWidget {
   final MenuItem menuItem;
 
   const FoodDetails({super.key, required this.menuItem});
 
   @override
-  _FoodDetailsState createState() => _FoodDetailsState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => CounterViewModel(),
+      child: FoodDetailsWrapper(menuItem: menuItem),
+    );
+  }
 }
 
-class _FoodDetailsState extends State<FoodDetails> {
-  int quantity = 1;
+class FoodDetailsWrapper extends StatefulWidget {
+  final MenuItem menuItem;
+  
+
+  const FoodDetailsWrapper({super.key, required this.menuItem});
+
+  @override
+  _FoodDetailsWrapperState createState() => _FoodDetailsWrapperState();
+}
+
+class _FoodDetailsWrapperState extends State<FoodDetailsWrapper> {
+
+  late SharedPreferences pref;
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((value) => setState(() {
+      pref = value;
+    }));
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    final counterViewModel = Provider.of<CounterViewModel>(context);
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -26,12 +60,13 @@ class _FoodDetailsState extends State<FoodDetails> {
           onPressed: () {},
         ),
       ),
-      body: part(widget.menuItem, context),
+      body: part(widget.menuItem, context, counterViewModel),
     );
   }
 
-  Widget part(MenuItem menuItem, BuildContext context) {
+  Widget part(MenuItem menuItem, BuildContext context,CounterViewModel counterViewModel) {
     Size size = MediaQuery.of(context).size;
+      counterViewModel.getCurrentPrice(menuItem.price);
     return Column(
       children: [
         Image.asset(
@@ -103,71 +138,87 @@ class _FoodDetailsState extends State<FoodDetails> {
                     alignment: Alignment.center,
                     child: Padding(
                       padding: const EdgeInsets.only(
-                          right: 50), // Add extra padding to the right
+                          right: 40), // Add extra padding to the right
                       child: Stack(clipBehavior: Clip.none, children: [
                         Container(
-                          width: 100,
+                          width: 172,
                           padding: const EdgeInsets.all(8),
                           decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30))),
-                                  child: Text(
-                              "\$${menuItem.price}",
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.normal),
-                            ),
+                          child: Text(
+                            "\$${counterViewModel.currentPrice}",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.normal),
+                          ),
                         ),
                         Positioned(
                           left: 60,
                           child: Container(
-                            width: 110,
+                            width: 120,
                             padding: const EdgeInsets.all(8),
                             decoration: const BoxDecoration(
                                 color: Colors.red,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(30))),
-                              
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                    const Icon(Icons.remove),
-
-                                    Container(
-                                      width: 25,
-                                      height: 25,
-                                      decoration: const BoxDecoration(
+                                  GestureDetector(
+                                    onTap: counterViewModel.decrementQuantity,
+                                    child: const Icon(Icons.remove)
+                                    
+                                    ),
+                                  Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: const BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.all(Radius.circular(50))
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(50))),
+                                    child: Center(child: Text(counterViewModel.amountCounterState.toString())),
+                                  ),
+                                    InkWell(
+                                        onTap: counterViewModel.incrementQuantity,
+                                        child: const Icon(
+                                          Icons.add,
+                                        ),
                                       ),
-                                      child: const Center(child: Text("1")),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          quantity++;
-                                        });
-                                      },
-                                      child: const Icon(Icons.add),
-                                    ),
-                              ]),
-
-
-                              ]),
-            
+                                ]),
                           ),
                         ),
                       ]),
                     ),
                   ),
                 ),
+                    Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: Text("Ingredients : ${menuItem.ingredients}" , style: const TextStyle(fontFamily: 'Montserrat',fontWeight: FontWeight.bold),),
+              ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12),
+                      child: ElevatedButton(
+                        onPressed: () {pref.setInt("totalPrice",counterViewModel.currentPrice);},
+                        style: ElevatedButton.styleFrom(primary: Colors.blue),
+                        child: const Text("Save Price"),
+                      ),
+                    ),
+
+                    Text(pref.get("totalPrice").toString()),
+                    
+             
               ],
+              
             ),
           ),
+          
         ),
+  
       ],
     );
   }
-}
+} 

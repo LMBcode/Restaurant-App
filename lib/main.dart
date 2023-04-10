@@ -2,7 +2,11 @@ import 'package:chatapp/home_page.dart';
 import 'package:chatapp/splash.dart';
 import 'package:flutter/material.dart';
 
-void main(){
+import 'data/PricesPreference.dart';
+
+Future<void> main() async {
+
+  
   runApp(const Main());
 }
 class Main extends StatelessWidget {
