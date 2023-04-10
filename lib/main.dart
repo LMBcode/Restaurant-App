@@ -2,7 +2,6 @@ import 'package:chatapp/home_page.dart';
 import 'package:chatapp/splash.dart';
 import 'package:flutter/material.dart';
 
-import 'data/PricesPreference.dart';
 
 Future<void> main() async {
 

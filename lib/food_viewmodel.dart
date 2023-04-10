@@ -11,7 +11,8 @@ class CounterViewModel extends ChangeNotifier {
         int _currentPrice = 1;
     int get currentPrice => _currentPrice;
 
-    
+            int _totalPrice = 1;
+    int get totalPrice => _totalPrice;
 
     void incrementQuantity(){
       _amountCounterState++;
@@ -20,6 +21,10 @@ class CounterViewModel extends ChangeNotifier {
 
     void getCurrentPrice(int price){
         _currentPrice = _amountCounterState * price;
+    }
+
+    void getTotalPrice(){
+        _totalPrice += _currentPrice;
     }
 
     void decrementQuantity(){
