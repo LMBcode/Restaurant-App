@@ -31,15 +31,22 @@ class FoodDetailsWrapper extends StatefulWidget {
 }
 
 class _FoodDetailsWrapperState extends State<FoodDetailsWrapper> {
-  late SharedPreferences pref;
+  SharedPreferences? pref;
+  late Future<SharedPreferences> _prefsFuture;
 
   @override
   void initState() {
     super.initState();
-    SharedPreferences.getInstance().then((value) => setState(() {
-          pref = value;
-        }));
+    _prefsFuture = _initSharedPreferences();
   }
+
+   Future<SharedPreferences> _initSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+            setState(() {
+        pref = prefs;
+      });
+      return prefs;
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -62,20 +69,20 @@ class _FoodDetailsWrapperState extends State<FoodDetailsWrapper> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          int existingTotalPrice = pref.getInt("totalPriceKey") ?? 0;
+          int existingTotalPrice = pref?.getInt("totalPriceKey") ?? 0;
           int updatedTotalPrice =
               existingTotalPrice + counterViewModel.currentPrice;
-          pref.setInt("totalPriceKey", updatedTotalPrice);
+          pref?.setInt("totalPriceKey", updatedTotalPrice);
 
           int itemTotalPrice = counterViewModel.currentPrice;
-          pref.setInt("itemTotalPrice_${widget.menuItem.name}", itemTotalPrice);
+          pref?.setInt("itemTotalPrice_${widget.menuItem.name}", itemTotalPrice);
 
-          pref.setInt("quantity_${widget.menuItem.name}", quantity);
+          pref?.setInt("quantity_${widget.menuItem.name}", quantity);
 
-          List<String> itemList = pref.getStringList("itemListKey") ?? [];
+          List<String> itemList = pref?.getStringList("itemListKey") ?? [];
           if (!itemList.contains(widget.menuItem.name)) {
             itemList.add(widget.menuItem.name);
-            pref.setStringList("itemListKey", itemList);
+            pref?.setStringList("itemListKey", itemList);
           }
         },
         backgroundColor: Colors.white,
@@ -229,7 +236,7 @@ class _FoodDetailsWrapperState extends State<FoodDetailsWrapper> {
                         fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(pref.get("totalPriceKey").toString()),
+                Text(pref!.get("totalPriceKey").toString()),
               ],
             ),
           ),
