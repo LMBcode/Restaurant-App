@@ -5,7 +5,7 @@
 import 'package:chatapp/home_page.dart';
 import 'package:chatapp/pages/food_detail.dart';
 import 'package:chatapp/pages/menu_page.dart';
-import 'package:chatapp/pages/order_page.dart';
+import 'package:chatapp/pages/order_page/order_page.dart';
 import 'package:flutter/material.dart';
 
 import 'components/bottom_nav.dart';
