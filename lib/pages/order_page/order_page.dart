@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../food_viewmodel.dart';
 import '../../foods_list.dart';
 import 'ItemRow.dart';
+import 'checkout.dart';
 
 class OrderPage extends StatelessWidget {
   const OrderPage({super.key});
@@ -30,11 +31,11 @@ class _OrderPageStateWrapper extends State<OrderPageWrapper> {
   late SharedPreferences pref;
   late Future<SharedPreferences> _prefsFuture;
 
-@override
-  void initState() {
-    super.initState();
-    _prefsFuture = _initSharedPreferences(); // Initialize _prefsFuture here
-  }
+  @override
+    void initState() {
+      super.initState();
+      _prefsFuture = _initSharedPreferences(); // Initialize _prefsFuture here
+    }
 
     int getSubtotal() {
     int subtotal = 0;
@@ -75,6 +76,7 @@ class _OrderPageStateWrapper extends State<OrderPageWrapper> {
           double taxes =
               double.parse((subtotal * (taxRate / 100)).toStringAsFixed(2));
 
+          double totalPrice = double.parse((subtotal + taxes).toStringAsFixed(2));
 
           return Scaffold(
             body: SafeArea(
@@ -149,13 +151,17 @@ class _OrderPageStateWrapper extends State<OrderPageWrapper> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12))),
                           onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const CheckoutPage(),
+                                      ),
+                                  );
                             setState(() {
-                              itemList.clear();
-                              pref.setStringList("itemListKey", itemList);
-                              pref.remove(("totalPriceKey"));
+                              pref.setDouble("finaltotalPrice", totalPrice);
                             });
                           },
-                          child: Text("Button")),
+                          child: const Text("CHECKOUT")),
                     )
                   ],
                 ),
