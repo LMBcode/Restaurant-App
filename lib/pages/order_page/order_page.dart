@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../food_viewmodel.dart';
 import '../../foods_list.dart';
+import '../../presentation/pay.dart';
 import 'ItemRow.dart';
 import 'checkout.dart';
 
@@ -154,7 +155,7 @@ class _OrderPageStateWrapper extends State<OrderPageWrapper> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const CheckoutPage(),
+                                        builder: (context) => const PaymentPage(),
                                       ),
                                   );
                             setState(() {

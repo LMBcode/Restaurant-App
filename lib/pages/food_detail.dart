@@ -1,4 +1,4 @@
-import 'package:chatapp/presentation/PricesPreferencesVM.dart';
+import 'package:chatapp/presentation/StripePaymentRepo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
