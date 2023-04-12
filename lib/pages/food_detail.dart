@@ -236,7 +236,6 @@ class _FoodDetailsWrapperState extends State<FoodDetailsWrapper> {
                         fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text(pref!.get("totalPriceKey").toString()),
               ],
             ),
           ),

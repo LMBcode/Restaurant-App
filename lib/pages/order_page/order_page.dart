@@ -54,8 +54,8 @@ class _OrderPageStateWrapper extends State<OrderPageWrapper> {
     return prefs;
   }
 
-  Widget itemRow(MenuItem menuItem) {
-    return ItemRow(menuItem: menuItem, pref: pref,onQuantityChanged: () => setState(() {}),
+  Widget itemRow(MenuItem menuItem,int index) {
+    return ItemRow(menuItem: menuItem, pref: pref,onQuantityChanged: () => setState(() {}),itemList : itemList,index:index,onDeleteItem: () => setState(() {})
 );
   }
 
@@ -104,7 +104,7 @@ class _OrderPageStateWrapper extends State<OrderPageWrapper> {
                         itemCount: itemList.length,
                         itemBuilder: (context, index) {
                           MenuItem menuItem = getMenuByName(itemList[index]);
-                          return itemRow(menuItem);
+                          return itemRow(menuItem,index);
                         },
                       ),
                     ),
