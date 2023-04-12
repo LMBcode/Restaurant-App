@@ -29,7 +29,8 @@ class Main extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.orange,fontFamily: 'Montserrat'),
-      home: const SplashPage()
+      home: 
+      const SplashPage()
     );
   }
 }

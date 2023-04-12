@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../food_viewmodel.dart';
 import '../../foods_list.dart';
+import '../../presentation/StripePaymentRepo.dart';
+import '../../presentation/StripePaymentVM.dart';
 import '../../presentation/pay.dart';
 import 'ItemRow.dart';
 import 'checkout.dart';
@@ -13,8 +15,15 @@ class OrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CounterViewModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CounterViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => StripePaymentVM(paymentRepository: StripePaymentRepo()),
+        ),
+      ],
       child: const OrderPageWrapper(),
     );
   }
@@ -151,13 +160,9 @@ class _OrderPageStateWrapper extends State<OrderPageWrapper> {
                           style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12))),
-                          onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const PaymentPage(),
-                                      ),
-                                  );
+                          onPressed: () async {
+                                          final paymentViewModel = Provider.of<StripePaymentVM>(context, listen: false);
+                                    await paymentViewModel.makePayment(totalPrice);
                             setState(() {
                               pref.setDouble("finaltotalPrice", totalPrice);
                             });
