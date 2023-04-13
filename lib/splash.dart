@@ -28,7 +28,6 @@ class _SplashPageState extends State<SplashPage> {
     });
   }
   final List<Widget> _pages = [
-    const OrderPage(),
     HomePage(
     onFoodTypeSelected: (BuildContext context, String foodType) {
       Navigator.push(
