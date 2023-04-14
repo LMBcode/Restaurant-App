@@ -308,7 +308,7 @@ List<MenuItem> menuItems = [
     image: 'images/strawberryjuice.png',
     price: 3,
     type: 'Juice',
-    category: 'Fruit',
+    category: 'Juice',
     ingredients: ['Strawberries', 'Water', 'Sugar'],
     preparationTime: 10,
     kcal: 110,
