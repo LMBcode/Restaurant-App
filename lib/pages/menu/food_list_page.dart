@@ -25,8 +25,18 @@ class _FoodsListPageState extends State<FoodsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        title: Text("Menu: ${widget.food}"),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: const Icon(
+            Icons.arrow_back,
+            color: Colors.amber,
+          ),
+        ),
+        
       ),
             body: filteredMenuItems.isNotEmpty
           ? ListView.builder(
