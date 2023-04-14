@@ -1,12 +1,13 @@
 
-import 'package:chatapp/pages/menu_page.dart';
+import 'package:chatapp/pages/menu/menu_page.dart';
 import 'package:flutter/material.dart';
 import 'foods_list.dart';
 
 class HomePage extends StatefulWidget {
   final Function(BuildContext context, String foodType) onFoodTypeSelected;
   final Function (BuildContext context, MenuItem food) onFoodSelected;
-  const HomePage({Key? key,required this.onFoodTypeSelected,required this.onFoodSelected}) : super(key: key);
+  final Function (BuildContext context, String food) onFoodClick;
+  const HomePage({Key? key,required this.onFoodTypeSelected,required this.onFoodSelected,required this.onFoodClick}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -164,31 +165,34 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget food(Food item) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 12),
-      child: Container(
-        width: 120,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.amber,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: Row(
-            children: [
-              Flexible(
-                  child: Image.asset(
-                item.image,
-                width: 50,
-                height: 50,
-              )),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Text(item.type),
+    return GestureDetector(
+      onTap: () => widget.onFoodClick(context,item.type),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 12),
+        child: Container(
+          width: 120,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.amber,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Row(
+              children: [
+                Flexible(
+                    child: Image.asset(
+                  item.image,
+                  width: 50,
+                  height: 50,
+                )),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Text(item.type),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

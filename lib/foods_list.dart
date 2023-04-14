@@ -67,7 +67,7 @@ List<MenuItem> menuItems = [
     image: 'images/grilled_salmon.png',
     price: 8,
     type: "Salmon",
-    category: 'Food',
+    category: 'Foods',
     ingredients: ['Salmon fillet', 'Olive oil', 'Salt', 'Pepper', 'Lemon'],
     preparationTime: 30,
     kcal: 520,
@@ -77,7 +77,7 @@ List<MenuItem> menuItems = [
     image: 'images/tacos.png',
     price: 8,
     type: "Tacos",
-    category: 'other',
+    category: 'Foods',
     isRecommended: true,
     ingredients: [
       'Tortillas',
@@ -95,7 +95,7 @@ List<MenuItem> menuItems = [
     name: 'Sushi',
     image: 'images/black_sushi.png',
     price: 8,
-    category: 'Sushi',
+    category: 'Foods',
     type: "Sushi",
     ingredients: [
       'Sushi rice',
@@ -114,7 +114,7 @@ List<MenuItem> menuItems = [
     image: 'images/sushisa.png',
     price: 22,
     type: "Sushi",
-    category: 'Sushi',
+    category: 'Foods',
     isRecommended: true,
     ingredients: [
       'Sushi rice',
@@ -132,7 +132,7 @@ List<MenuItem> menuItems = [
     name: 'Sushi Platter',
     image: 'images/sushi_platter.png',
     price: 25,
-    category: 'Sushi',
+    category: 'Foods',
     type: "Sushi",
     ingredients: [
       'Assorted sushi',
@@ -150,7 +150,7 @@ List<MenuItem> menuItems = [
     image: 'images/othersushi.png',
     price: 25,
     type: "Sushi",
-    category: 'Sushi',
+    category: 'Foods',
     isRecommended: true,
     ingredients: [
       'Sushi rice',
@@ -168,7 +168,7 @@ List<MenuItem> menuItems = [
     name: 'Pizza Margherita',
     image: 'images/piazza_margherita.png',
     price: 12,
-    category: 'Food',
+    category: 'Foods',
     type: "Pizza",
     ingredients: ['Pizza dough', 'Tomato sauce', 'Mozzarella cheese', 'Basil'],
     preparationTime: 20,
@@ -179,7 +179,7 @@ List<MenuItem> menuItems = [
     image: 'images/pizza_chicken.png',
     price: 10,
     type: "Pizza",
-    category: 'Food',
+    category: 'Foods',
     isRecommended: true,
     ingredients: [
       'Pizza dough',
@@ -196,7 +196,7 @@ List<MenuItem> menuItems = [
     name: 'Tomato Pizza',
     image: 'images/pizza_tomato.png',
     price: 13,
-    category: 'Food',
+    category: 'Foods',
     type: "Pizza",
     ingredients: [
       'Pizza dough',
@@ -213,7 +213,7 @@ List<MenuItem> menuItems = [
     image: 'images/pasta_carbonara.png',
     price: 7,
     type: "Pasta",
-    category: 'Food',
+    category: 'Foods',
     isRecommended: true,
     ingredients: ['Spaghetti', 'Bacon', 'Eggs', 'Parmesan cheese', 'Pepper'],
     preparationTime: 30,
@@ -223,7 +223,7 @@ List<MenuItem> menuItems = [
     name: 'Pasta Bolognese',
     image: 'images/bolognese.png',
     price: 17,
-    category: 'Food',
+    category: 'Foods',
     type: "Pasta",
     ingredients: [
       'Spaghetti',
@@ -241,7 +241,7 @@ List<MenuItem> menuItems = [
     image: 'images/hambur.png',
     price: 5,
     type: "Burger",
-    category: 'Food',
+    category: 'Foods',
     isRecommended: true,
     ingredients: [
       'Bun',
@@ -260,7 +260,7 @@ List<MenuItem> menuItems = [
     name: 'Cheeseburger',
     image: 'images/cheeseburger.png',
     price: 6,
-    category: 'Food',
+    category: 'Foods',
     type: "Burger",
     ingredients: [
       'Bun',
@@ -281,7 +281,7 @@ List<MenuItem> menuItems = [
     image: 'images/steak.png',
     price: 30,
     type: "Meats",
-    category: 'Food',
+    category: 'Foods',
     ingredients: [
       'Ribeye steak',
       'Salt',

@@ -2,31 +2,31 @@
 
 import 'package:flutter/material.dart';
 
-import '../foods_list.dart';
+import '../../foods_list.dart';
 
-class MenuPage extends StatefulWidget {
-  final String foodType;
-  const MenuPage({super.key,required this.foodType});
+class FoodsListPage extends StatefulWidget {
+  final String food;
+  const FoodsListPage({super.key,required this.food});
 
   @override
-  State<MenuPage> createState() => _MenuPageState();
+  State<FoodsListPage> createState() => _FoodsListPageState();
 }
 
-class _MenuPageState extends State<MenuPage> {
+class _FoodsListPageState extends State<FoodsListPage> {
 
   late List<MenuItem> filteredMenuItems;
 
     @override
   void initState() {
     super.initState();
-    filteredMenuItems = menuItems.where((it) => it.type.toLowerCase().contains(widget.foodType.toLowerCase())).toList();
+    filteredMenuItems = menuItems.where((it) => it.category.toLowerCase().contains(widget.food.toLowerCase())).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Menu: ${widget.foodType}"),
+        title: Text("Menu: ${widget.food}"),
       ),
             body: filteredMenuItems.isNotEmpty
           ? ListView.builder(

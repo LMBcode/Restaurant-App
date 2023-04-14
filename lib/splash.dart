@@ -4,7 +4,8 @@
 
 import 'package:chatapp/home_page.dart';
 import 'package:chatapp/pages/food_detail.dart';
-import 'package:chatapp/pages/menu_page.dart';
+import 'package:chatapp/pages/menu/food_list_page.dart';
+import 'package:chatapp/pages/menu/menu_page.dart';
 import 'package:chatapp/pages/order_page/order_page.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,9 @@ class _SplashPageState extends State<SplashPage> {
           builder: (context) => MenuPage(foodType: foodType),
         ),
     );
+  },
+  onFoodClick: (context, String food) => {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => FoodsListPage(food: food)))
   },
   onFoodSelected: (BuildContext context , MenuItem menuItem){
           Navigator.push(
