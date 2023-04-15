@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'components/bottom_nav.dart';
 import 'foods_list.dart';
 
+/*
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -65,3 +66,4 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 }
+*/
